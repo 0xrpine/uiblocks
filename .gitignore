@@ -1,0 +1,19 @@
+# dependencies
+node_modules/
+
+# builds
+.next/
+out/
+dist/
+*.tsbuildinfo
+
+# env and secrets
+.env*
+!.env.example
+
+# OS
+.DS_Store
+
+# test artifacts
+playwright-report/
+test-results/

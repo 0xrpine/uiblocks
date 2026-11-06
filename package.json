@@ -1,0 +1,10 @@
+{
+  "name": "uiblocks",
+  "private": true,
+  "scripts": {
+    "dev": "pnpm -C apps/docs dev",
+    "build": "pnpm -C apps/docs build",
+    "lint": "pnpm -C apps/docs lint",
+    "typecheck": "pnpm -C apps/docs typecheck"
+  }
+}
