@@ -1,6 +1,7 @@
 {
   "name": "uiblocks",
   "private": true,
+  "packageManager": "pnpm@10.6.5",
   "scripts": {
     "dev": "pnpm -C apps/docs dev",
     "build": "pnpm -C apps/docs build",
