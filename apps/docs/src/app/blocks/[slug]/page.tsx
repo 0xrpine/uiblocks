@@ -36,7 +36,8 @@ export default async function BlockPage({ params }: { params: Promise<{ slug: st
         &larr; All blocks
       </Link>
 
-      <header className="mt-6 mb-10">
+      {/* The site banner lives in the global header; this is plain page intro. */}
+      <div className="mt-6 mb-10">
         <div className="flex items-center gap-3">
           <h1 className="text-3xl font-semibold tracking-tight">{block.title}</h1>
           {block.category !== "elements" ? (
@@ -46,7 +47,7 @@ export default async function BlockPage({ params }: { params: Promise<{ slug: st
           ) : null}
         </div>
         <p className="mt-2 max-w-2xl text-muted-foreground">{block.description}</p>
-      </header>
+      </div>
 
       {ui ? (
         <section className="mb-10">
@@ -69,7 +70,7 @@ export default async function BlockPage({ params }: { params: Promise<{ slug: st
       {block.usage ? (
         <section className="mb-10">
           <h2 className="mb-4 text-lg font-semibold">Usage</h2>
-          <CodeBlock code={block.usage} filename={`${block.name}.tsx`} />
+          <CodeBlock code={block.usage} filename="Usage example" />
         </section>
       ) : null}
 
