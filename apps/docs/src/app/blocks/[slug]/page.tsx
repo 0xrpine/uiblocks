@@ -117,6 +117,6 @@ function PrevNext({ currentSlug }: { currentSlug: string }) {
       ) : (
         <span />
       )}
-    </nav>
+    </div>
   );
 }
