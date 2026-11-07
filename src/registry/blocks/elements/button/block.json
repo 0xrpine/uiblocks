@@ -1,0 +1,9 @@
+{
+  "name": "button",
+  "title": "Button",
+  "description": "Button with tone and size variants. Accessible by default as a native element.",
+  "framework": "react",
+  "style": "tailwind",
+  "dependencies": ["class-variance-authority"],
+  "files": ["button.tsx"]
+}

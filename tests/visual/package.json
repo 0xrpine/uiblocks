@@ -1,0 +1,10 @@
+{
+  "name": "uiblocks-visual",
+  "private": true,
+  "scripts": {
+    "test": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1"
+  }
+}

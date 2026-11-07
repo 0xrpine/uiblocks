@@ -17,3 +17,7 @@ dist/
 # test artifacts
 playwright-report/
 test-results/
+screenshots/
+
+# generated registry manifests (built before each site build)
+apps/docs/public/r/

@@ -7,5 +7,12 @@
     "build": "pnpm -C apps/docs build",
     "lint": "pnpm -C apps/docs lint",
     "typecheck": "pnpm -C apps/docs typecheck"
+  },
+  "dependencies": {
+    "class-variance-authority": "^0.7.1"
+  },
+  "devDependencies": {
+    "@types/react": "^19",
+    "react": "19.3.0"
   }
 }
