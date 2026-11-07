@@ -1,0 +1,9 @@
+{
+  "name": "progress",
+  "title": "Progress",
+  "description": "Determinate progress bar with optional percentage label. Accessible via Radix.",
+  "framework": "react",
+  "style": "tailwind",
+  "dependencies": ["@radix-ui/react-progress"],
+  "files": ["progress.tsx"]
+}

@@ -1,0 +1,9 @@
+{
+  "name": "card",
+  "title": "Card",
+  "description": "Grouped container with header, content and footer slots.",
+  "framework": "react",
+  "style": "tailwind",
+  "dependencies": [],
+  "files": ["card.tsx"]
+}

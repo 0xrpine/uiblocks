@@ -1,0 +1,9 @@
+{
+  "name": "textarea",
+  "title": "Textarea",
+  "description": "Multiline text input with label, hint and error state.",
+  "framework": "react",
+  "style": "tailwind",
+  "dependencies": [],
+  "files": ["textarea.tsx"]
+}

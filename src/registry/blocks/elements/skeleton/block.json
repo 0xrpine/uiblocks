@@ -1,0 +1,9 @@
+{
+  "name": "skeleton",
+  "title": "Skeleton",
+  "description": "Loading placeholder block that pulses while content resolves.",
+  "framework": "react",
+  "style": "tailwind",
+  "dependencies": [],
+  "files": ["skeleton.tsx"]
+}

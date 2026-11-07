@@ -1,12 +1,41 @@
 import { test, expect } from "@playwright/test";
 
-test("home lists blocks", async ({ page }) => {
+const blocks = ["alert", "avatar", "badge", "button", "card", "input", "progress", "skeleton", "textarea"];
+
+for (const block of blocks) {
+  test(`block ${block} renders with no console errors`, async ({ page }) => {
+    const consoleErrors: string[] = [];
+    page.on("console", (msg) => {
+      if (msg.type() === "error") consoleErrors.push(msg.text());
+    });
+    await page.goto(`/blocks/${block}`);
+    await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+    expect(consoleErrors).toEqual([]);
+  });
+}
+
+const titles: Record<string, string> = {
+  alert: "Alert",
+  avatar: "Avatar",
+  badge: "Badge",
+  button: "Button",
+  card: "Card",
+  input: "Input",
+  progress: "Progress",
+  skeleton: "Skeleton",
+  textarea: "Textarea",
+};
+
+test("home lists every block", async ({ page }) => {
   await page.goto("/");
-  await expect(page.getByRole("heading", { name: "UIblocks" })).toBeVisible();
-  await expect(page.getByRole("link", { name: /Button/ })).toBeVisible();
+  const catalog = page.locator("#blocks");
+  await expect(catalog).toBeVisible();
+  for (const block of blocks) {
+    await expect(catalog.getByText(titles[block], { exact: true })).toBeVisible();
+  }
 });
 
-test("button block renders demo, playground and toggles theme", async ({ page }) => {
+test("button block: playground interaction and theme toggle", async ({ page }) => {
   const consoleErrors: string[] = [];
   page.on("console", (msg) => {
     if (msg.type() === "error") consoleErrors.push(msg.text());
@@ -33,4 +62,14 @@ test("button block renders demo, playground and toggles theme", async ({ page })
   expect(consoleErrors).toEqual([]);
 
   await page.screenshot({ path: "screenshots/button-block.png", fullPage: true });
+});
+
+test("registry serves every block manifest", async ({ request }) => {
+  for (const block of blocks) {
+    const res = await request.get(`/r/${block}.json`);
+    expect(res.status()).toBe(200);
+    const manifest = await res.json();
+    expect(manifest.name).toBe(block);
+    expect(manifest.files.length).toBeGreaterThan(0);
+  }
 });

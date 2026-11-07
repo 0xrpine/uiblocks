@@ -1,0 +1,9 @@
+{
+  "name": "badge",
+  "title": "Badge",
+  "description": "Small pill label for statuses and counts. Three tones, two sizes.",
+  "framework": "react",
+  "style": "tailwind",
+  "dependencies": [],
+  "files": ["badge.tsx"]
+}

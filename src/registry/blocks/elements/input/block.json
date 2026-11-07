@@ -1,0 +1,9 @@
+{
+  "name": "input",
+  "title": "Input",
+  "description": "Text input with label, hint, required marker and error state. Sizes sm to lg, optional leading icon.",
+  "framework": "react",
+  "style": "tailwind",
+  "dependencies": [],
+  "files": ["input.tsx"]
+}
