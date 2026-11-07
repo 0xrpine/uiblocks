@@ -5,5 +5,6 @@
   "framework": "react",
   "style": "tailwind",
   "dependencies": [],
-  "files": ["input.tsx"]
+  "files": ["input.tsx"],
+  "usage": "import { Input } from \"@/components/uiblocks/input\";\n\n<Input label=\"Email\" required placeholder=\"olivia@example.com\" />"
 }

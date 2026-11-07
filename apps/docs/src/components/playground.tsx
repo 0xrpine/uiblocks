@@ -47,7 +47,7 @@ export function Playground({
                 <select
                   value={String(value)}
                   onChange={(e) => set(control.key, e.target.value)}
-                  className="h-8 rounded-md border border-input bg-background px-2 text-foreground"
+                  className="h-8 rounded-md border border-input bg-background px-2 text-foreground outline-none transition-colors focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring"
                 >
                   {control.options.map((option) => (
                     <option key={optionText(option)} value={typeof option === "string" ? option : option.value}>
@@ -77,7 +77,7 @@ export function Playground({
                     if (control.uppercase) next = next.toUpperCase();
                     set(control.key, next);
                   }}
-                  className="h-8 w-32 rounded-md border border-input bg-background px-2 text-foreground"
+                  className="h-8 w-32 rounded-md border border-input bg-background px-2 text-foreground outline-none transition-colors focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring"
                 />
               ) : (
                 <input

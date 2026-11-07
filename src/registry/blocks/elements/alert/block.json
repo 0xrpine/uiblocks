@@ -5,5 +5,6 @@
   "framework": "react",
   "style": "tailwind",
   "dependencies": [],
-  "files": ["alert.tsx"]
+  "files": ["alert.tsx"],
+  "usage": "import { Alert, AlertDescription, AlertTitle } from \"@/components/uiblocks/alert\";\n\n<Alert>\n  <AlertTitle>Heads up</AlertTitle>\n  <AlertDescription>You can add supporting text here.</AlertDescription>\n</Alert>"
 }

@@ -5,5 +5,6 @@
   "framework": "react",
   "style": "tailwind",
   "dependencies": [],
-  "files": ["card.tsx"]
+  "files": ["card.tsx"],
+  "usage": "import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from \"@/components/uiblocks/card\";\n\n<Card>\n  <CardHeader>\n    <CardTitle>Card title</CardTitle>\n    <CardDescription>Supporting description.</CardDescription>\n  </CardHeader>\n  <CardContent>Card content goes here.</CardContent>\n  <CardFooter>Actions go here.</CardFooter>\n</Card>"
 }

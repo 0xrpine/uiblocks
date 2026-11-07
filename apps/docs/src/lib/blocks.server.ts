@@ -9,6 +9,7 @@ export interface BlockMeta {
   framework?: string;
   dependencies: string[];
   files: string[];
+  usage?: string;
 }
 
 const BLOCKS_DIR = path.join(process.cwd(), "..", "..", "src", "registry", "blocks");

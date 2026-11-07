@@ -16,7 +16,7 @@ export function Progress({ value, max = 100, showValue = false, label, className
   const percent = Math.round((clamped / max) * 100);
 
   return (
-    <div className="flex w-full flex-col gap-1.5">
+    <div className={`flex w-full flex-col gap-1.5 ${className ?? ""}`}>
       {label || showValue ? (
         <div className="flex items-center justify-between text-sm">
           {label ? <span className="text-foreground">{label}</span> : <span />}
@@ -31,7 +31,7 @@ export function Progress({ value, max = 100, showValue = false, label, className
         value={clamped}
         max={max}
         aria-label={label ?? `Progress: ${percent}%`}
-        className={`relative h-2 w-full overflow-hidden rounded-full bg-muted ${className ?? ""}`}
+        className="relative h-2 w-full overflow-hidden rounded-full bg-muted"
         {...props}
       >
         <ProgressPrimitive.Indicator

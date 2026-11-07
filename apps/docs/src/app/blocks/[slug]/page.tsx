@@ -62,6 +62,13 @@ export default async function BlockPage({ params }: { params: Promise<{ slug: st
         </section>
       ) : null}
 
+      {block.usage ? (
+        <section className="mb-10">
+          <h2 className="mb-4 text-lg font-semibold">Usage</h2>
+          <CodeBlock code={block.usage} filename={`${block.name}.tsx`} />
+        </section>
+      ) : null}
+
       <section className="mb-10">
         <h2 className="mb-4 text-lg font-semibold">Source</h2>
         <CodeBlock code={source} filename={sourceName} />
@@ -79,6 +86,37 @@ export default async function BlockPage({ params }: { params: Promise<{ slug: st
           MIT licensed, yours to edit.
         </p>
       </section>
+
+      <PrevNext currentSlug={slug} />
     </div>
+  );
+}
+
+function PrevNext({ currentSlug }: { currentSlug: string }) {
+  const sorted = listBlocks();
+  const index = sorted.findIndex((block) => block.name === currentSlug);
+  if (index === -1) return null;
+  const prev = sorted[index - 1];
+  const next = sorted[index + 1];
+
+  return (
+    <div aria-label="Block navigation" className="mx-auto flex max-w-5xl items-stretch justify-between gap-4 border-t border-border px-4 py-8">
+      {prev ? (
+        <Link href={`/blocks/${prev.name}`} className="rounded-lg border border-border p-4 transition-colors hover:bg-muted/50">
+          <span className="block text-xs text-muted-foreground">&larr; Previous</span>
+          <span className="font-medium">{prev.title}</span>
+        </Link>
+      ) : (
+        <span />
+      )}
+      {next ? (
+        <Link href={`/blocks/${next.name}`} className="rounded-lg border border-border p-4 text-right transition-colors hover:bg-muted/50">
+          <span className="block text-xs text-muted-foreground">Next &rarr;</span>
+          <span className="font-medium">{next.title}</span>
+        </Link>
+      ) : (
+        <span />
+      )}
+    </nav>
   );
 }

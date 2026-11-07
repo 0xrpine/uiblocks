@@ -7,10 +7,10 @@ import { cva, type VariantProps } from "class-variance-authority";
 const avatarVariants = cva("relative flex shrink-0 overflow-hidden rounded-full", {
   variants: {
     size: {
-      sm: "size-8",
-      md: "size-10",
-      lg: "size-12",
-      xl: "size-16",
+      sm: "size-8 text-xs",
+      md: "size-10 text-sm",
+      lg: "size-12 text-base",
+      xl: "size-16 text-lg",
     },
   },
   defaultVariants: {
@@ -30,7 +30,7 @@ export function Avatar({ className, size, src, alt, fallback, ...props }: Avatar
   return (
     <AvatarPrimitive.Root className={avatarVariants({ size, className })} {...props}>
       {src ? <AvatarPrimitive.Image src={src} alt={alt ?? fallback} className="aspect-square size-full object-cover" /> : null}
-      <AvatarPrimitive.Fallback className="flex size-full items-center justify-center bg-muted text-foreground">
+      <AvatarPrimitive.Fallback className="flex size-full items-center justify-center border border-border bg-muted text-foreground">
         {fallback}
       </AvatarPrimitive.Fallback>
     </AvatarPrimitive.Root>
@@ -41,19 +41,29 @@ export function AvatarGroup({
   children,
   className,
   max = 3,
+  size = "md",
 }: {
   children: React.ReactNode;
   className?: string;
   max?: number;
+  size?: NonNullable<AvatarProps["size"]>;
 }) {
   const items = React.Children.toArray(children);
   const visible = items.slice(0, max);
   const rest = items.length - visible.length;
+  const chipSize = {
+    sm: "size-8 text-xs",
+    md: "size-10 text-sm",
+    lg: "size-12 text-base",
+    xl: "size-16 text-lg",
+  }[size];
   return (
     <div className={`flex -space-x-2 ${className ?? ""}`}>
       {visible}
       {rest > 0 ? (
-        <span className="relative flex size-10 shrink-0 items-center justify-center overflow-hidden rounded-full border-2 border-background bg-muted text-xs font-medium text-foreground">
+        <span
+          className={`relative flex shrink-0 items-center justify-center overflow-hidden rounded-full border-2 border-background bg-muted font-medium text-foreground ${chipSize}`}
+        >
           +{rest}
         </span>
       ) : null}

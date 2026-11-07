@@ -25,6 +25,7 @@ export function TextareaPlayground() {
           rowsHeight={values.rowsHeight as React.ComponentProps<typeof Textarea>["rowsHeight"]}
           label={Boolean(values.hasLabel) ? "Message" : undefined}
           required={Boolean(values.required)}
+          maxLength={500}
           placeholder={String(values.placeholder)}
           hint={Boolean(values.hasHint) && !values.hasError ? "Up to 500 characters." : undefined}
           error={Boolean(values.hasError) ? "This field cannot be empty." : undefined}

@@ -29,9 +29,9 @@ export function CardPlayground() {
           ) : null}
           {Boolean(values.footer) ? (
             <CardFooter className="gap-3">
-              <Button size="sm">Primary</Button>
+              <Button size="sm">Solid</Button>
               <Button size="sm" variant="outline">
-                Secondary
+                Outline
               </Button>
             </CardFooter>
           ) : null}

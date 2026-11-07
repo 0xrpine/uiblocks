@@ -4,7 +4,7 @@ import { Playground, type PlaygroundControl } from "@/components/playground";
 import { Badge } from "./badge";
 
 const controls: PlaygroundControl[] = [
-  { type: "select", key: "tone", label: "Tone", options: [
+  { type: "select", key: "variant", label: "Variant", options: [
     { value: "solid", label: "Solid" },
     { value: "soft", label: "Soft" },
     { value: "outline", label: "Outline" },
@@ -21,7 +21,7 @@ export function BadgePlayground() {
     <Playground
       controls={controls}
       render={(values) => (
-        <Badge tone={values.tone as React.ComponentProps<typeof Badge>["tone"]} size={values.size as React.ComponentProps<typeof Badge>["size"]}>
+        <Badge variant={values.variant as React.ComponentProps<typeof Badge>["variant"]} size={values.size as React.ComponentProps<typeof Badge>["size"]}>
           {String(values.label)}
         </Badge>
       )}

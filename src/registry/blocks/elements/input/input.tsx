@@ -4,7 +4,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import * as React from "react";
 
 const inputVariants = cva(
-  "w-full rounded-md border border-input bg-background text-foreground placeholder:text-muted-foreground transition-colors outline-none focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/30 disabled:cursor-not-allowed disabled:opacity-50 aria-[invalid=true]:border-destructive aria-[invalid=true]:focus-visible:ring-destructive/25",
+  "w-full rounded-md border border-input bg-background text-foreground placeholder:text-muted-foreground transition-colors outline-none focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 aria-[invalid=true]:border-destructive aria-[invalid=true]:focus-visible:ring-destructive-text/25",
   {
     variants: {
       size: {
@@ -58,7 +58,12 @@ export function Input({
       {label ? (
         <label htmlFor={inputId} className="text-sm font-medium text-foreground">
           {label}
-          {required ? <span className="text-muted-foreground"> *</span> : null}
+          {required ? (
+            <span aria-hidden="true" className="text-muted-foreground">
+              {" "}
+              *
+            </span>
+          ) : null}
         </label>
       ) : null}
       <div className="relative">
@@ -69,6 +74,7 @@ export function Input({
         ) : null}
         <input
           id={inputId}
+          required={required}
           aria-invalid={error ? true : undefined}
           aria-describedby={describedBy}
           className={inputVariants({ size: effectiveSize, hasLeadingIcon: Boolean(leadingIcon), className })}
