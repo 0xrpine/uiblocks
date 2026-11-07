@@ -20,8 +20,10 @@ export default async function BlockPage({ params }: { params: Promise<{ slug: st
   if (!block) notFound();
 
   const ui = BLOCK_UI[slug];
-  const source = readBlockFile(slug, block.files[0]);
-  const sourceName = block.files[0];
+  const sources = block.files.map((file) => ({
+    file,
+    content: readBlockFile(slug, file),
+  }));
   const installShadcn = `npx shadcn@latest add "https://uiblocks.cloud/r/${block.name}.json"`;
   const installJsrepo = `npx jsrepo@latest add https://uiblocks.cloud/r/${block.name}`;
   const installDeps = block.dependencies.length
@@ -37,9 +39,11 @@ export default async function BlockPage({ params }: { params: Promise<{ slug: st
       <header className="mt-6 mb-10">
         <div className="flex items-center gap-3">
           <h1 className="text-3xl font-semibold tracking-tight">{block.title}</h1>
-          <span className="rounded-full border border-border px-2.5 py-0.5 text-xs uppercase tracking-wide text-muted-foreground">
-            {block.category}
-          </span>
+          {block.category !== "elements" ? (
+            <span className="rounded-full border border-border px-2.5 py-0.5 text-xs uppercase tracking-wide text-muted-foreground">
+              {block.category}
+            </span>
+          ) : null}
         </div>
         <p className="mt-2 max-w-2xl text-muted-foreground">{block.description}</p>
       </header>
@@ -71,7 +75,11 @@ export default async function BlockPage({ params }: { params: Promise<{ slug: st
 
       <section className="mb-10">
         <h2 className="mb-4 text-lg font-semibold">Source</h2>
-        <CodeBlock code={source} filename={sourceName} />
+        <div className="flex flex-col gap-4">
+          {sources.map(({ file, content }) => (
+            <CodeBlock key={file} code={content} filename={file} />
+          ))}
+        </div>
       </section>
 
       <section className="mb-10">
@@ -98,24 +106,31 @@ function PrevNext({ currentSlug }: { currentSlug: string }) {
   if (index === -1) return null;
   const prev = sorted[index - 1];
   const next = sorted[index + 1];
+  const both = prev && next;
 
   return (
     <div aria-label="Block navigation" className="mx-auto flex max-w-5xl items-stretch justify-between gap-4 border-t border-border px-4 py-8">
       {prev ? (
-        <Link href={`/blocks/${prev.name}`} className="rounded-lg border border-border p-4 transition-colors hover:bg-muted/50">
+        <Link
+          href={`/blocks/${prev.name}`}
+          className={`rounded-lg border border-border p-4 transition-colors hover:bg-muted/50 ${both ? "" : "w-full text-center"}`}
+        >
           <span className="block text-xs text-muted-foreground">&larr; Previous</span>
           <span className="font-medium">{prev.title}</span>
         </Link>
       ) : (
-        <span />
+        <span className={both ? undefined : "hidden"} />
       )}
       {next ? (
-        <Link href={`/blocks/${next.name}`} className="rounded-lg border border-border p-4 text-right transition-colors hover:bg-muted/50">
+        <Link
+          href={`/blocks/${next.name}`}
+          className={`rounded-lg border border-border p-4 transition-colors hover:bg-muted/50 ${both ? "text-right" : "w-full text-center"}`}
+        >
           <span className="block text-xs text-muted-foreground">Next &rarr;</span>
           <span className="font-medium">{next.title}</span>
         </Link>
       ) : (
-        <span />
+        <span className={both ? undefined : "hidden"} />
       )}
     </div>
   );

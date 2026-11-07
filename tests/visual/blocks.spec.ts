@@ -89,6 +89,26 @@ test("key blocks have computed styles applied (guards against missing Tailwind c
   await page.goto("/blocks/card");
   const card = page.locator(".rounded-lg").first();
   await expect(card).toHaveCSS("border-width", "1px");
+
+  await page.goto("/blocks/alert");
+  const alert = page.locator('[role="alert"]').first();
+  await expect(alert).toHaveCSS("border-width", "1px");
+  await expect(alert).toHaveCSS("display", "grid");
+
+  await page.goto("/blocks/button");
+  const stageButton = page.getByRole("button", { name: "Get started" });
+  await expect(stageButton).toHaveCSS("height", "40px");
+  await expect(stageButton).toHaveCSS("background-color", /^(?!.*rgba\(0, 0, 0, 0\)).*$/);
+
+  await page.goto("/blocks/progress");
+  const track = page.locator('[role="progressbar"]').first();
+  await expect(track).toHaveCSS("height", "8px");
+  await expect(track).toHaveCSS("background-color", /^(?!.*rgba\(0, 0, 0, 0\)).*$/);
+
+  await page.goto("/blocks/textarea");
+  const textarea = page.locator("textarea").first();
+  await expect(textarea).toHaveCSS("border-width", "1px");
+  await expect(textarea).toHaveCSS("min-height", "96px");
 });
 
 test("registry serves every block manifest", async ({ request }) => {

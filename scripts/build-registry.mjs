@@ -9,6 +9,8 @@ const outDir = path.join(root, "apps", "docs", "public", "r");
 const BUILTIN_MODULES = new Set(["react", "react-dom"]);
 const index = [];
 
+fs.rmSync(outDir, { recursive: true, force: true });
+
 for (const category of fs.readdirSync(blocksDir)) {
   const categoryPath = path.join(blocksDir, category);
   if (!fs.statSync(categoryPath).isDirectory()) continue;
@@ -20,22 +22,42 @@ for (const category of fs.readdirSync(blocksDir)) {
 
     const meta = JSON.parse(fs.readFileSync(metaPath, "utf8"));
 
+    if (meta.name !== name) {
+      throw new Error(`block.json name "${meta.name}" does not match folder name "${name}"`);
+    }
+
     const fileContents = new Map(
       (meta.files ?? []).map((file) => [file, fs.readFileSync(path.join(dir, file), "utf8")]),
     );
 
     // Guard: every non-relative external import used by shipped files must be
     // declared in dependencies, or the published manifest installs broken code.
+    // Covers static, side-effect, dynamic and require() import forms. Path
+    // aliases (@/) are rejected outright: they do not exist in consumer projects.
     const declared = new Set([...(meta.dependencies ?? []), ...BUILTIN_MODULES]);
     const undeclared = new Set();
+    const aliased = new Set();
     for (const content of fileContents.values()) {
-      const imports = content.matchAll(/from\s+["']([^"']+)["']/g);
-      for (const match of imports) {
-        const source = match[1];
-        if (source.startsWith(".") || source.startsWith("@/")) continue;
+      const sources = [
+        ...[...content.matchAll(/from\s+["']([^"']+)["']/g)].map((m) => m[1]),
+        ...[...content.matchAll(/import\s+["']([^"']+)["']/g)].map((m) => m[1]),
+        ...[...content.matchAll(/import\(\s*["']([^"']+)["']\s*\)/g)].map((m) => m[1]),
+        ...[...content.matchAll(/require\(\s*["']([^"']+)["']\s*\)/g)].map((m) => m[1]),
+      ];
+      for (const source of sources) {
+        if (source.startsWith("@/")) {
+          aliased.add(source);
+          continue;
+        }
+        if (source.startsWith(".")) continue;
         const pkg = source.startsWith("@") ? source.split("/").slice(0, 2).join("/") : source.split("/")[0];
         if (!declared.has(pkg)) undeclared.add(pkg);
       }
+    }
+    if (aliased.size > 0) {
+      throw new Error(
+        `block "${name}": shipped files must not use path aliases (not resolvable in consumer projects): ${[...aliased].join(", ")}`,
+      );
     }
     if (undeclared.size > 0) {
       throw new Error(

@@ -34,7 +34,7 @@ export function Progress({ value, max = 100, showValue = false, label, className
       <ProgressPrimitive.Root
         value={clamped}
         max={max}
-        aria-label={label ?? `Progress: ${percent}%`}
+        aria-label={label ?? "Progress"}
         className="relative h-2 w-full overflow-hidden rounded-full bg-muted"
         {...props}
       >

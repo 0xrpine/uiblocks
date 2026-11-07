@@ -1,12 +1,18 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export function CodeBlock({ code, filename }: { code: string; filename?: string }) {
   const [copied, setCopied] = useState(false);
   const [failed, setFailed] = useState(false);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const preRef = useRef<HTMLPreElement>(null);
+
+  useEffect(() => {
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+    };
+  }, []);
 
   const flash = (state: "copied" | "failed") => {
     if (timerRef.current) clearTimeout(timerRef.current);
@@ -23,6 +29,8 @@ export function CodeBlock({ code, filename }: { code: string; filename?: string 
       await navigator.clipboard.writeText(code);
       flash("copied");
     } catch {
+      // execCommand("copy") is deprecated and on the removal path, but it is
+      // the only fallback left for non-secure contexts and blocked permissions.
       try {
         const range = document.createRange();
         range.selectNodeContents(preRef.current ?? document.body);
@@ -45,13 +53,15 @@ export function CodeBlock({ code, filename }: { code: string; filename?: string 
         <button
           type="button"
           onClick={copy}
+          aria-label="Copy code"
           className="rounded-md border border-border px-2.5 py-1 text-xs text-muted-foreground transition-colors outline-none hover:bg-muted hover:text-foreground focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring"
         >
-          <span role="status">
-            {copied ? "Copied" : failed ? "Copy failed" : "Copy"}
-          </span>
+          <span aria-hidden="true">{copied ? "Copied" : failed ? "Copy failed" : "Copy"}</span>
         </button>
       </div>
+      <span role="status" className="sr-only">
+        {copied ? "Code copied to clipboard" : failed ? "Failed to copy code" : ""}
+      </span>
       <pre
         ref={preRef}
         role="region"

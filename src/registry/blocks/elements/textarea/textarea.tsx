@@ -47,6 +47,8 @@ export function Textarea({
   const [length, setLength] = React.useState(
     typeof defaultValue === "string" ? defaultValue.length : 0,
   );
+  const controlledValue = props.value;
+  const shownLength = controlledValue !== undefined ? String(controlledValue).length : length;
 
   return (
     <div className="flex w-full flex-col gap-1.5">
@@ -79,10 +81,10 @@ export function Textarea({
           data-textarea-count=""
           aria-hidden="true"
           className={`text-xs tabular-nums ${
-            length >= maxLength ? "text-destructive-text" : "text-muted-foreground"
+            shownLength >= Math.ceil(maxLength * 0.9) ? "text-destructive-text" : "text-muted-foreground"
           }`}
         >
-          {length}/{maxLength}
+          {shownLength}/{maxLength}
         </p>
       ) : null}
       {error ? (

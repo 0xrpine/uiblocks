@@ -27,6 +27,9 @@ jobs:
       - name: Typecheck
         run: pnpm typecheck
 
+      - name: Check registry and test types
+        run: pnpm check
+
       - name: Build docs site
         run: pnpm build
 

@@ -4,14 +4,16 @@ import * as AvatarPrimitive from "@radix-ui/react-avatar";
 import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 
+const avatarSizeClasses = {
+  sm: "size-8 text-xs",
+  md: "size-10 text-sm",
+  lg: "size-12 text-base",
+  xl: "size-16 text-lg",
+} as const;
+
 const avatarVariants = cva("relative flex shrink-0 overflow-hidden rounded-full", {
   variants: {
-    size: {
-      sm: "size-8 text-xs",
-      md: "size-10 text-sm",
-      lg: "size-12 text-base",
-      xl: "size-16 text-lg",
-    },
+    size: avatarSizeClasses,
   },
   defaultVariants: {
     size: "md",
@@ -37,32 +39,23 @@ export function Avatar({ className, size, src, alt, fallback, ...props }: Avatar
   );
 }
 
-export function AvatarGroup({
-  children,
-  className,
-  max = 3,
-  size = "md",
-}: {
+export interface AvatarGroupProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
-  className?: string;
   max?: number;
   size?: NonNullable<AvatarProps["size"]>;
-}) {
+}
+
+export function AvatarGroup({ children, className, max = 3, size = "md", ...props }: AvatarGroupProps) {
   const items = React.Children.toArray(children);
-  const visible = items.slice(0, max);
+  const safeMax = Math.max(0, max);
+  const visible = items.slice(0, safeMax);
   const rest = items.length - visible.length;
-  const chipSize = {
-    sm: "size-8 text-xs",
-    md: "size-10 text-sm",
-    lg: "size-12 text-base",
-    xl: "size-16 text-lg",
-  }[size];
   return (
-    <div className={`flex -space-x-2 ${className ?? ""}`}>
+    <div className={`flex -space-x-2 ${className ?? ""}`} {...props}>
       {visible}
       {rest > 0 ? (
         <span
-          className={`relative flex shrink-0 items-center justify-center overflow-hidden rounded-full border-2 border-background bg-muted font-medium text-foreground ${chipSize}`}
+          className={`relative flex shrink-0 items-center justify-center overflow-hidden rounded-full border-2 border-background bg-muted font-medium text-foreground ${avatarSizeClasses[size]}`}
         >
           +{rest}
         </span>

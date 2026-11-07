@@ -65,6 +65,11 @@ export function getBlock(name: string): BlockMeta | undefined {
 export function readBlockFile(name: string, file: string): string {
   const block = getBlock(name);
   if (!block) throw new Error(`Unknown block: ${name}`);
+  if (!block.files.includes(file)) throw new Error(`File "${file}" is not shipped by block "${name}"`);
   const filePath = path.join(BLOCKS_DIR, block.category, name, file);
-  return fs.readFileSync(filePath, "utf8");
+  const resolved = path.resolve(filePath);
+  if (!resolved.startsWith(path.resolve(BLOCKS_DIR) + path.sep)) {
+    throw new Error(`Path escapes the blocks directory: ${file}`);
+  }
+  return fs.readFileSync(resolved, "utf8");
 }

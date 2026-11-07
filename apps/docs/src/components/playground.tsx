@@ -24,13 +24,19 @@ export function Playground({
   render: (values: PlaygroundValues) => ReactNode;
 }) {
   const [values, setValues] = useState<PlaygroundValues>(() => valuesFrom(controls));
+  const [nonce, setNonce] = useState(0);
 
   const set = (key: string, value: string | number | boolean) =>
     setValues((prev) => ({ ...prev, [key]: value }));
 
+  const reset = () => {
+    setValues(valuesFrom(controls));
+    setNonce((n) => n + 1);
+  };
+
   return (
     <div className="overflow-hidden rounded-lg border border-border">
-      <div className="flex min-h-48 items-center justify-center overflow-x-auto bg-background p-10">
+      <div key={nonce} className="flex min-h-48 items-center justify-center overflow-x-auto bg-background p-10">
         {render(values)}
       </div>
       <div className="border-t border-border bg-card">
@@ -38,7 +44,7 @@ export function Playground({
           <span className="text-xs font-medium text-muted-foreground">Controls</span>
           <button
             type="button"
-            onClick={() => setValues(valuesFrom(controls))}
+            onClick={reset}
             className="rounded-md border border-border px-2.5 py-1 text-xs text-muted-foreground transition-colors outline-none hover:bg-muted hover:text-foreground focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring"
           >
             Reset
@@ -54,7 +60,7 @@ export function Playground({
                   <select
                     value={String(value)}
                     onChange={(e) => set(control.key, e.target.value)}
-                    className="h-8 rounded-md border border-input bg-background px-2 text-foreground outline-none transition-colors focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring"
+                    className="h-8 rounded-md border border-input bg-background px-2 text-foreground outline-none transition-colors hover:border-muted-foreground/60 focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring"
                   >
                     {control.options.map((option) => (
                       <option key={option.value} value={option.value}>
@@ -68,7 +74,7 @@ export function Playground({
                     role="switch"
                     aria-checked={Boolean(value)}
                     onClick={() => set(control.key, !value)}
-                    className={`relative h-5 w-9 rounded-full transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${value ? "bg-primary" : "bg-input"}`}
+                    className={`relative h-5 w-9 rounded-full transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 hover:opacity-80 ${value ? "bg-primary" : "bg-input"}`}
                   >
                     <span
                       className={`absolute top-0.5 size-4 rounded-full bg-background transition-all ${value ? "left-4.5" : "left-0.5"}`}
@@ -84,7 +90,7 @@ export function Playground({
                       if (control.uppercase) next = next.toUpperCase();
                       set(control.key, next);
                     }}
-                    className="h-8 w-32 rounded-md border border-input bg-background px-2 text-foreground outline-none transition-colors focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring"
+                    className="h-8 w-40 rounded-md border border-input bg-background px-2 text-foreground outline-none transition-colors hover:border-muted-foreground/60 focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring"
                   />
                 ) : (
                   <input

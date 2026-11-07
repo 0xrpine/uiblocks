@@ -9,8 +9,8 @@ const controls: PlaygroundControl[] = [
     { value: "default", label: "Default" },
     { value: "destructive", label: "Destructive" },
   ], default: "default" },
-  { type: "boolean", key: "hasIcon", label: "Icon", default: true },
-  { type: "boolean", key: "hasDescription", label: "Description", default: true },
+  { type: "boolean", key: "hasIcon", label: "Show icon", default: true },
+  { type: "boolean", key: "hasDescription", label: "Show description", default: true },
   { type: "text", key: "title", label: "Title", default: "Heads up", maxChars: 60 },
   { type: "text", key: "description", label: "Description", default: "You can add supporting text to the alert here.", maxChars: 120 },
 ];
