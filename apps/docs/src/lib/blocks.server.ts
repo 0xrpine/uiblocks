@@ -29,7 +29,15 @@ let cache: BlockMeta[] | null = null;
 export function listBlocks(): BlockMeta[] {
   if (cache) return cache;
   const metas: BlockMeta[] = [];
-  const categories = fs.readdirSync(BLOCKS_DIR);
+  let categories: string[];
+  try {
+    categories = fs.readdirSync(BLOCKS_DIR);
+  } catch {
+    // Runtime environments without the source tree (e.g. serverless) cannot
+    // resolve unknown slugs; known slugs are all prerendered at build time.
+    cache = [];
+    return cache;
+  }
   for (const category of categories) {
     const categoryPath = path.join(BLOCKS_DIR, category);
     if (!fs.statSync(categoryPath).isDirectory()) continue;
