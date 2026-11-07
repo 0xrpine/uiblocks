@@ -6,7 +6,8 @@ const alertVariants = cva(
     variants: {
       tone: {
         default: "border-border bg-card text-card-foreground",
-        destructive: "border-destructive/30 bg-destructive/10 text-foreground [&>svg]:text-destructive",
+        destructive:
+          "border-destructive/30 bg-destructive/10 text-foreground [&>svg]:text-destructive [&_[data-alert-description]]:text-foreground",
       },
     },
     defaultVariants: {
@@ -30,12 +31,18 @@ export function Alert({ className, tone, icon, children, ...props }: AlertProps)
   );
 }
 
-export function AlertTitle({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) {
-  return <h5 className="font-medium leading-none" {...props} />;
+export function AlertTitle({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
+  return <div className="font-medium leading-none" {...props} />;
 }
 
 export function AlertDescription({ className, ...props }: React.HTMLAttributes<HTMLParagraphElement>) {
-  return <p className="text-muted-foreground [&_p]:leading-relaxed" {...props} />;
+  return (
+    <p
+      data-alert-description=""
+      className={`text-muted-foreground [&_p]:leading-relaxed ${className ?? ""}`}
+      {...props}
+    />
+  );
 }
 
 export { alertVariants };

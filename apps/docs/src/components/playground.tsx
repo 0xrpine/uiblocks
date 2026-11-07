@@ -41,7 +41,7 @@ export function Playground({
         {controls.map((control) => {
           const value = values[control.key];
           return (
-            <label key={control.key} className="flex items-center justify-between gap-3 text-sm">
+            <label key={control.key} className="flex items-center gap-3 text-sm">
               <span className="text-muted-foreground">{control.label}</span>
               {control.type === "select" ? (
                 <select

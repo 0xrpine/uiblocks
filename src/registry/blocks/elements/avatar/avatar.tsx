@@ -30,7 +30,7 @@ export function Avatar({ className, size, src, alt, fallback, ...props }: Avatar
   return (
     <AvatarPrimitive.Root className={avatarVariants({ size, className })} {...props}>
       {src ? <AvatarPrimitive.Image src={src} alt={alt ?? fallback} className="aspect-square size-full object-cover" /> : null}
-      <AvatarPrimitive.Fallback className="flex size-full items-center justify-center bg-muted text-muted-foreground">
+      <AvatarPrimitive.Fallback className="flex size-full items-center justify-center bg-muted text-foreground">
         {fallback}
       </AvatarPrimitive.Fallback>
     </AvatarPrimitive.Root>
@@ -53,7 +53,7 @@ export function AvatarGroup({
     <div className={`flex -space-x-2 ${className ?? ""}`}>
       {visible}
       {rest > 0 ? (
-        <span className="relative flex size-10 shrink-0 items-center justify-center overflow-hidden rounded-full border-2 border-background bg-muted text-xs font-medium text-muted-foreground">
+        <span className="relative flex size-10 shrink-0 items-center justify-center overflow-hidden rounded-full border-2 border-background bg-muted text-xs font-medium text-foreground">
           +{rest}
         </span>
       ) : null}

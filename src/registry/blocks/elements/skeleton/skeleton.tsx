@@ -1,5 +1,12 @@
 import * as React from "react";
 
+/** Decorative loading placeholder: hidden from assistive tech, visible to the eye. */
 export function Skeleton({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
-  return <div className={`animate-pulse bg-muted ${className ?? "rounded-md"}`} {...props} />;
+  return (
+    <div
+      aria-hidden="true"
+      className={`animate-pulse bg-skeleton ${className ?? "rounded-md"}`}
+      {...props}
+    />
+  );
 }

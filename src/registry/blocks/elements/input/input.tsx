@@ -1,4 +1,7 @@
+"use client";
+
 import { cva, type VariantProps } from "class-variance-authority";
+import * as React from "react";
 
 const inputVariants = cva(
   "w-full rounded-md border border-input bg-background text-foreground placeholder:text-muted-foreground transition-colors outline-none focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/30 disabled:cursor-not-allowed disabled:opacity-50 aria-[invalid=true]:border-destructive aria-[invalid=true]:focus-visible:ring-destructive/25",
@@ -45,7 +48,8 @@ export function Input({
   id,
   ...props
 }: InputProps) {
-  const inputId = id ?? props.name ?? undefined;
+  const autoId = React.useId();
+  const inputId = id ?? props.name ?? autoId;
   const effectiveSize = size ?? inputSize;
   const describedBy = error ? `${inputId ?? "input"}-error` : hint ? `${inputId ?? "input"}-hint` : undefined;
 
@@ -72,7 +76,7 @@ export function Input({
         />
       </div>
       {error ? (
-        <p id={describedBy} className="text-sm text-destructive">
+        <p id={describedBy} className="text-sm text-destructive-text">
           {error}
         </p>
       ) : hint ? (

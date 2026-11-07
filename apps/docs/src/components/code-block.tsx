@@ -23,7 +23,12 @@ export function CodeBlock({ code, filename }: { code: string; filename?: string 
           {copied ? "Copied" : "Copy"}
         </button>
       </div>
-      <pre className="overflow-x-auto bg-muted/40 p-4 font-mono text-xs leading-relaxed text-foreground">
+      <pre
+        role="region"
+        aria-label={filename ? `Code sample: ${filename}` : "Code sample"}
+        tabIndex={0}
+        className="overflow-x-auto bg-muted/40 p-4 font-mono text-xs leading-relaxed text-foreground"
+      >
         <code>{code}</code>
       </pre>
     </div>

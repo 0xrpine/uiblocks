@@ -1,4 +1,5 @@
 import { cva, type VariantProps } from "class-variance-authority";
+import * as React from "react";
 
 const textareaVariants = cva(
   "w-full rounded-md border border-input bg-background px-3 py-2.5 text-sm text-foreground placeholder:text-muted-foreground transition-colors outline-none focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/30 disabled:cursor-not-allowed disabled:opacity-50 aria-[invalid=true]:border-destructive aria-[invalid=true]:focus-visible:ring-destructive/25",
@@ -35,7 +36,8 @@ export function Textarea({
   id,
   ...props
 }: TextareaProps) {
-  const inputId = id ?? props.name ?? undefined;
+  const autoId = React.useId();
+  const inputId = id ?? props.name ?? autoId;
   const describedBy = error ? `${inputId ?? "textarea"}-error` : hint ? `${inputId ?? "textarea"}-hint` : undefined;
 
   return (
@@ -54,7 +56,7 @@ export function Textarea({
         {...props}
       />
       {error ? (
-        <p id={describedBy} className="text-sm text-destructive">
+        <p id={describedBy} className="text-sm text-destructive-text">
           {error}
         </p>
       ) : hint ? (
