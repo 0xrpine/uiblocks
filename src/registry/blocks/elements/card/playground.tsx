@@ -15,7 +15,7 @@ export function CardPlayground() {
     <Playground
       controls={controls}
       render={(values) => (
-        <Card className="w-full max-w-sm">
+        <Card className="mx-auto w-full max-w-sm">
           {Boolean(values.header) ? (
             <CardHeader>
               <CardTitle>Card title</CardTitle>

@@ -15,6 +15,7 @@ export function ProgressPlayground() {
       controls={controls}
       render={(values) => (
         <Progress
+          className="mx-auto max-w-sm"
           value={Number(values.value)}
           showValue={Boolean(values.showValue)}
           label={String(values.label || "") || undefined}

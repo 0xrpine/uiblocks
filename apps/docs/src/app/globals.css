@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+/* Blocks live outside apps/docs; Tailwind's automatic detection only scans the
+   app scope, so the block source must be declared explicitly. */
+@source "../../../../src/registry";
+
 @custom-variant dark (&:is(.dark *));
 
 /*

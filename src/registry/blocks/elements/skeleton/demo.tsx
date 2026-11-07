@@ -4,7 +4,7 @@ import { Skeleton } from "./skeleton";
 
 export function SkeletonDemo() {
   return (
-    <div className="flex w-full max-w-sm flex-col gap-3">
+    <div className="mx-auto flex w-full max-w-sm flex-col gap-3">
       <div className="flex items-center gap-3">
         <Skeleton className="size-10 rounded-full" />
         <div className="flex flex-col gap-2">

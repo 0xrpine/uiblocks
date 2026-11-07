@@ -5,7 +5,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 
 export function CardDemo() {
   return (
-    <Card className="w-full max-w-sm">
+    <Card className="mx-auto w-full max-w-sm">
       <CardHeader>
         <CardTitle>Card title</CardTitle>
         <CardDescription>Supporting description for the card content.</CardDescription>
