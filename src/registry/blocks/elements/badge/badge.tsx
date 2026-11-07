@@ -1,7 +1,8 @@
 import { cva, type VariantProps } from "class-variance-authority";
+import * as React from "react";
 
 const badgeVariants = cva(
-  "inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full font-medium",
+  "inline-flex max-w-full items-center justify-center gap-1 whitespace-nowrap rounded-full font-medium",
   {
     variants: {
       variant: {
@@ -25,8 +26,12 @@ export interface BadgeProps
   extends React.HTMLAttributes<HTMLSpanElement>,
     VariantProps<typeof badgeVariants> {}
 
-export function Badge({ className, variant, size, ...props }: BadgeProps) {
-  return <span className={badgeVariants({ variant, size, className })} {...props} />;
+export function Badge({ className, variant, size, children, ...props }: BadgeProps) {
+  return (
+    <span className={badgeVariants({ variant, size, className })} {...props}>
+      <span className="truncate">{children}</span>
+    </span>
+  );
 }
 
 export { badgeVariants };

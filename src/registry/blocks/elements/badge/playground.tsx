@@ -1,5 +1,6 @@
 "use client";
 
+import type * as React from "react";
 import { Playground, type PlaygroundControl } from "@/components/playground";
 import { Badge } from "./badge";
 
@@ -13,7 +14,7 @@ const controls: PlaygroundControl[] = [
     { value: "sm", label: "Small" },
     { value: "md", label: "Medium" },
   ], default: "md" },
-  { type: "text", key: "label", label: "Label", default: "Label" },
+  { type: "text", key: "label", label: "Label", default: "Label", maxChars: 30 },
 ];
 
 export function BadgePlayground() {

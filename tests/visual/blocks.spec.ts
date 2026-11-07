@@ -56,8 +56,12 @@ test("button block: playground interaction and theme toggle", async ({ page }) =
   await expect(stageButton).toBeVisible();
   await stageButton.click();
 
-  await page.getByRole("switch").click();
+  await page.getByRole("switch", { name: "Disabled" }).click();
   await expect(stageButton).toBeDisabled();
+  await page.getByRole("switch", { name: "Disabled" }).click();
+  await page.getByRole("switch", { name: "Loading" }).click();
+  await expect(stageButton).toBeDisabled();
+  await page.getByRole("switch", { name: "Loading" }).click();
 
   expect(consoleErrors).toEqual([]);
 

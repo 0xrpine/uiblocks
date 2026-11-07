@@ -6,7 +6,7 @@ import { Progress } from "./progress";
 const controls: PlaygroundControl[] = [
   { type: "range", key: "value", label: "Value %", min: 0, max: 100, default: 60 },
   { type: "boolean", key: "showValue", label: "Show %", default: true },
-  { type: "text", key: "label", label: "Label", default: "Uploading files" },
+  { type: "text", key: "label", label: "Label", default: "Uploading files", maxChars: 40 },
 ];
 
 export function ProgressPlayground() {

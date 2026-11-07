@@ -1,5 +1,6 @@
 "use client";
 
+import type * as React from "react";
 import { Playground, type PlaygroundControl } from "@/components/playground";
 import { Button } from "./button";
 
@@ -16,8 +17,9 @@ const controls: PlaygroundControl[] = [
     { value: "md", label: "Medium" },
     { value: "lg", label: "Large" },
   ], default: "md" },
+  { type: "boolean", key: "loading", label: "Loading", default: false },
   { type: "boolean", key: "disabled", label: "Disabled", default: false },
-  { type: "text", key: "label", label: "Label", default: "Get started" },
+  { type: "text", key: "label", label: "Label", default: "Get started", maxChars: 40 },
 ];
 
 export function ButtonPlayground() {
@@ -28,6 +30,7 @@ export function ButtonPlayground() {
         <Button
           variant={values.variant as React.ComponentProps<typeof Button>["variant"]}
           size={values.size as React.ComponentProps<typeof Button>["size"]}
+          loading={Boolean(values.loading)}
           disabled={Boolean(values.disabled)}
         >
           {String(values.label)}

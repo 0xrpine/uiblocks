@@ -4,7 +4,11 @@
   "description": "Multiline text input with label, hint and error state.",
   "framework": "react",
   "style": "tailwind",
-  "dependencies": [],
-  "files": ["textarea.tsx"],
+  "dependencies": [
+    "class-variance-authority"
+  ],
+  "files": [
+    "textarea.tsx"
+  ],
   "usage": "import { Textarea } from \"@/components/uiblocks/textarea\";\n\n<Textarea label=\"Message\" required maxLength={500} />"
 }

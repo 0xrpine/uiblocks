@@ -4,7 +4,12 @@
   "description": "User image with initials fallback and group stacking. Sizes small to extra large.",
   "framework": "react",
   "style": "tailwind",
-  "dependencies": ["@radix-ui/react-avatar"],
-  "files": ["avatar.tsx"],
+  "dependencies": [
+    "@radix-ui/react-avatar",
+    "class-variance-authority"
+  ],
+  "files": [
+    "avatar.tsx"
+  ],
   "usage": "import { Avatar } from \"@/components/uiblocks/avatar\";\n\n<Avatar size=\"md\" fallback=\"RK\" />"
 }

@@ -4,7 +4,11 @@
   "description": "Text input with label, hint, required marker and error state. Sizes small to large, optional leading icon.",
   "framework": "react",
   "style": "tailwind",
-  "dependencies": [],
-  "files": ["input.tsx"],
+  "dependencies": [
+    "class-variance-authority"
+  ],
+  "files": [
+    "input.tsx"
+  ],
   "usage": "import { Input } from \"@/components/uiblocks/input\";\n\n<Input label=\"Email\" required placeholder=\"olivia@example.com\" />"
 }

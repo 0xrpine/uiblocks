@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 
 export interface BlockMeta {
   name: string;
@@ -12,9 +13,21 @@ export interface BlockMeta {
   usage?: string;
 }
 
-const BLOCKS_DIR = path.join(process.cwd(), "..", "..", "src", "registry", "blocks");
+const BLOCKS_DIR = path.join(
+  path.dirname(fileURLToPath(import.meta.url)),
+  "..",
+  "..",
+  "..",
+  "..",
+  "src",
+  "registry",
+  "blocks",
+);
+
+let cache: BlockMeta[] | null = null;
 
 export function listBlocks(): BlockMeta[] {
+  if (cache) return cache;
   const metas: BlockMeta[] = [];
   const categories = fs.readdirSync(BLOCKS_DIR);
   for (const category of categories) {
@@ -23,11 +36,18 @@ export function listBlocks(): BlockMeta[] {
     for (const name of fs.readdirSync(categoryPath)) {
       const metaPath = path.join(categoryPath, name, "block.json");
       if (!fs.existsSync(metaPath)) continue;
-      const raw = JSON.parse(fs.readFileSync(metaPath, "utf8")) as Omit<BlockMeta, "category">;
-      metas.push({ category, ...raw });
+      const raw = fs.readFileSync(metaPath, "utf8");
+      let parsed: Omit<BlockMeta, "category">;
+      try {
+        parsed = JSON.parse(raw) as Omit<BlockMeta, "category">;
+      } catch (error) {
+        throw new Error(`Invalid block.json at ${metaPath}: ${(error as Error).message}`);
+      }
+      metas.push({ category, ...parsed });
     }
   }
-  return metas.sort((a, b) => (a.category + a.name).localeCompare(b.category + b.name));
+  cache = metas.sort((a, b) => (a.category + a.name).localeCompare(b.category + b.name));
+  return cache;
 }
 
 export function getBlock(name: string): BlockMeta | undefined {

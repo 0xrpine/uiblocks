@@ -1,16 +1,18 @@
 "use client";
 
+import type * as React from "react";
 import { Playground, type PlaygroundControl } from "@/components/playground";
 import { Alert, AlertDescription, AlertTitle } from "./alert";
 
 const controls: PlaygroundControl[] = [
-  { type: "select", key: "tone", label: "Tone", options: [
+  { type: "select", key: "variant", label: "Variant", options: [
     { value: "default", label: "Default" },
     { value: "destructive", label: "Destructive" },
   ], default: "default" },
   { type: "boolean", key: "hasIcon", label: "Icon", default: true },
   { type: "boolean", key: "hasDescription", label: "Description", default: true },
-  { type: "text", key: "title", label: "Title", default: "Heads up" },
+  { type: "text", key: "title", label: "Title", default: "Heads up", maxChars: 60 },
+  { type: "text", key: "description", label: "Description", default: "You can add supporting text to the alert here.", maxChars: 120 },
 ];
 
 export function AlertPlayground() {
@@ -19,7 +21,7 @@ export function AlertPlayground() {
       controls={controls}
       render={(values) => (
         <Alert
-          tone={values.tone as React.ComponentProps<typeof Alert>["tone"]}
+          variant={values.variant as React.ComponentProps<typeof Alert>["variant"]}
           icon={
             Boolean(values.hasIcon) ? (
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -31,7 +33,7 @@ export function AlertPlayground() {
         >
           <AlertTitle>{String(values.title)}</AlertTitle>
           {Boolean(values.hasDescription) ? (
-            <AlertDescription>You can add supporting text to the alert here.</AlertDescription>
+            <AlertDescription>{String(values.description)}</AlertDescription>
           ) : null}
         </Alert>
       )}

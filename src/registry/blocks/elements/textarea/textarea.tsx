@@ -1,3 +1,5 @@
+"use client";
+
 import { cva, type VariantProps } from "class-variance-authority";
 import * as React from "react";
 
@@ -34,11 +36,17 @@ export function Textarea({
   error,
   required,
   id,
+  maxLength,
+  onChange,
+  defaultValue,
   ...props
 }: TextareaProps) {
   const autoId = React.useId();
-  const inputId = id ?? props.name ?? autoId;
-  const describedBy = error ? `${inputId ?? "textarea"}-error` : hint ? `${inputId ?? "textarea"}-hint` : undefined;
+  const inputId = id ?? autoId;
+  const describedBy = error ? `${inputId}-error` : hint ? `${inputId}-hint` : undefined;
+  const [length, setLength] = React.useState(
+    typeof defaultValue === "string" ? defaultValue.length : 0,
+  );
 
   return (
     <div className="flex w-full flex-col gap-1.5">
@@ -56,11 +64,27 @@ export function Textarea({
       <textarea
         id={inputId}
         required={required}
+        maxLength={maxLength}
         aria-invalid={error ? true : undefined}
         aria-describedby={describedBy}
         className={textareaVariants({ rowsHeight, className })}
+        onChange={(event) => {
+          setLength(event.target.value.length);
+          onChange?.(event);
+        }}
         {...props}
       />
+      {maxLength ? (
+        <p
+          data-textarea-count=""
+          aria-hidden="true"
+          className={`text-xs tabular-nums ${
+            length >= maxLength ? "text-destructive-text" : "text-muted-foreground"
+          }`}
+        >
+          {length}/{maxLength}
+        </p>
+      ) : null}
       {error ? (
         <p id={describedBy} className="text-sm text-destructive-text">
           {error}

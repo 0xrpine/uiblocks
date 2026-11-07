@@ -4,7 +4,11 @@
   "description": "Small pill label for statuses and counts. Three tones, two sizes.",
   "framework": "react",
   "style": "tailwind",
-  "dependencies": [],
-  "files": ["badge.tsx"],
+  "dependencies": [
+    "class-variance-authority"
+  ],
+  "files": [
+    "badge.tsx"
+  ],
   "usage": "import { Badge } from \"@/components/uiblocks/badge\";\n\n<Badge variant=\"soft\">Label</Badge>"
 }

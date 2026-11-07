@@ -32,7 +32,6 @@ export interface InputProps
   error?: string;
   required?: boolean;
   leadingIcon?: React.ReactNode;
-  inputSize?: "sm" | "md" | "lg";
 }
 
 export function Input({
@@ -44,14 +43,12 @@ export function Input({
   error,
   required,
   leadingIcon,
-  inputSize,
   id,
   ...props
 }: InputProps) {
   const autoId = React.useId();
-  const inputId = id ?? props.name ?? autoId;
-  const effectiveSize = size ?? inputSize;
-  const describedBy = error ? `${inputId ?? "input"}-error` : hint ? `${inputId ?? "input"}-hint` : undefined;
+  const inputId = id ?? autoId;
+  const describedBy = error ? `${inputId}-error` : hint ? `${inputId}-hint` : undefined;
 
   return (
     <div className="flex w-full flex-col gap-1.5">
@@ -77,7 +74,7 @@ export function Input({
           required={required}
           aria-invalid={error ? true : undefined}
           aria-describedby={describedBy}
-          className={inputVariants({ size: effectiveSize, hasLeadingIcon: Boolean(leadingIcon), className })}
+          className={inputVariants({ size, hasLeadingIcon: Boolean(leadingIcon), className })}
           {...props}
         />
       </div>

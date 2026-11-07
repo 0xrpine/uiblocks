@@ -4,7 +4,11 @@
   "description": "Inline callout for contextual messages, with optional icon. Default and destructive tones.",
   "framework": "react",
   "style": "tailwind",
-  "dependencies": [],
-  "files": ["alert.tsx"],
+  "dependencies": [
+    "class-variance-authority"
+  ],
+  "files": [
+    "alert.tsx"
+  ],
   "usage": "import { Alert, AlertDescription, AlertTitle } from \"@/components/uiblocks/alert\";\n\n<Alert>\n  <AlertTitle>Heads up</AlertTitle>\n  <AlertDescription>You can add supporting text here.</AlertDescription>\n</Alert>"
 }

@@ -18,7 +18,7 @@ export function AvatarPlayground() {
     <Playground
       controls={controls}
       render={(values) => (
-        <Avatar size={values.size as React.ComponentProps<typeof Avatar>["size"]} fallback={String(values.fallback)} />
+        <Avatar size={values.size as React.ComponentProps<typeof Avatar>["size"]} fallback={String(values.fallback) || "?"} />
       )}
     />
   );

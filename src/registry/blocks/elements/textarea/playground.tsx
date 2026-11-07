@@ -1,5 +1,6 @@
 "use client";
 
+import type * as React from "react";
 import { Playground, type PlaygroundControl } from "@/components/playground";
 import { Textarea } from "./textarea";
 
@@ -13,7 +14,8 @@ const controls: PlaygroundControl[] = [
   { type: "boolean", key: "required", label: "Required", default: false },
   { type: "boolean", key: "hasHint", label: "Hint", default: true },
   { type: "boolean", key: "hasError", label: "Error", default: false },
-  { type: "text", key: "placeholder", label: "Placeholder", default: "Write your message..." },
+  { type: "boolean", key: "disabled", label: "Disabled", default: false },
+  { type: "text", key: "placeholder", label: "Placeholder", default: "Write your message...", maxChars: 40 },
 ];
 
 export function TextareaPlayground() {
@@ -24,11 +26,13 @@ export function TextareaPlayground() {
         <Textarea
           rowsHeight={values.rowsHeight as React.ComponentProps<typeof Textarea>["rowsHeight"]}
           label={Boolean(values.hasLabel) ? "Message" : undefined}
+          aria-label={Boolean(values.hasLabel) ? undefined : "Message"}
           required={Boolean(values.required)}
           maxLength={500}
           placeholder={String(values.placeholder)}
           hint={Boolean(values.hasHint) && !values.hasError ? "Up to 500 characters." : undefined}
           error={Boolean(values.hasError) ? "This field cannot be empty." : undefined}
+          disabled={Boolean(values.disabled)}
         />
       )}
     />

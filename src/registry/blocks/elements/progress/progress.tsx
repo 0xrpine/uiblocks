@@ -13,15 +13,19 @@ export interface ProgressProps
 
 export function Progress({ value, max = 100, showValue = false, label, className, ...props }: ProgressProps) {
   const clamped = Math.min(Math.max(value, 0), max);
-  const percent = Math.round((clamped / max) * 100);
+  const percent = max > 0 ? Math.round((clamped / max) * 100) : 0;
 
   return (
-    <div className={`flex w-full flex-col gap-1.5 ${className ?? ""}`}>
+    <div className={`flex w-full min-w-0 flex-col gap-1.5 ${className ?? ""}`}>
       {label || showValue ? (
-        <div className="flex items-center justify-between text-sm">
-          {label ? <span className="text-foreground">{label}</span> : <span />}
+        <div className="flex items-center justify-between gap-3 text-sm">
+          {label ? (
+            <span className="min-w-0 break-words text-foreground">{label}</span>
+          ) : (
+            <span />
+          )}
           {showValue ? (
-            <span className="font-medium tabular-nums text-foreground" aria-hidden="true">
+            <span className="flex-none font-medium tabular-nums text-foreground" aria-hidden="true">
               {percent}%
             </span>
           ) : null}
