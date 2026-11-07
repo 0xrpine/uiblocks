@@ -4,7 +4,11 @@ import { Playground, type PlaygroundControl } from "@/components/playground";
 import { Textarea } from "./textarea";
 
 const controls: PlaygroundControl[] = [
-  { type: "select", key: "rowsHeight", label: "Size", options: ["sm", "md", "lg"], default: "md" },
+  { type: "select", key: "rowsHeight", label: "Size", options: [
+    { value: "sm", label: "Small" },
+    { value: "md", label: "Medium" },
+    { value: "lg", label: "Large" },
+  ], default: "md" },
   { type: "boolean", key: "hasLabel", label: "Label", default: true },
   { type: "boolean", key: "required", label: "Required", default: false },
   { type: "boolean", key: "hasHint", label: "Hint", default: true },

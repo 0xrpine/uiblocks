@@ -4,8 +4,15 @@ import { Playground, type PlaygroundControl } from "@/components/playground";
 import { Badge } from "./badge";
 
 const controls: PlaygroundControl[] = [
-  { type: "select", key: "tone", label: "Tone", options: ["solid", "soft", "outline"], default: "soft" },
-  { type: "select", key: "size", label: "Size", options: ["sm", "md"], default: "md" },
+  { type: "select", key: "tone", label: "Tone", options: [
+    { value: "solid", label: "Solid" },
+    { value: "soft", label: "Soft" },
+    { value: "outline", label: "Outline" },
+  ], default: "soft" },
+  { type: "select", key: "size", label: "Size", options: [
+    { value: "sm", label: "Small" },
+    { value: "md", label: "Medium" },
+  ], default: "md" },
   { type: "text", key: "label", label: "Label", default: "Label" },
 ];
 

@@ -4,7 +4,10 @@ import { Playground, type PlaygroundControl } from "@/components/playground";
 import { Alert, AlertDescription, AlertTitle } from "./alert";
 
 const controls: PlaygroundControl[] = [
-  { type: "select", key: "tone", label: "Tone", options: ["default", "destructive"], default: "default" },
+  { type: "select", key: "tone", label: "Tone", options: [
+    { value: "default", label: "Default" },
+    { value: "destructive", label: "Destructive" },
+  ], default: "default" },
   { type: "boolean", key: "hasIcon", label: "Icon", default: true },
   { type: "boolean", key: "hasDescription", label: "Description", default: true },
   { type: "text", key: "title", label: "Title", default: "Heads up" },

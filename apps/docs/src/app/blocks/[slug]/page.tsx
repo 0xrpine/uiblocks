@@ -46,19 +46,19 @@ export default async function BlockPage({ params }: { params: Promise<{ slug: st
 
       {ui ? (
         <section className="mb-10">
-          <h2 className="mb-4 text-lg font-semibold">Preview</h2>
-          <div className="rounded-lg border border-border">
-            <div className="flex min-h-48 items-center justify-center bg-background p-10">
-              <ui.Demo />
-            </div>
-          </div>
+          <h2 className="mb-4 text-lg font-semibold">Playground</h2>
+          <ui.Playground />
         </section>
       ) : null}
 
       {ui ? (
         <section className="mb-10">
-          <h2 className="mb-4 text-lg font-semibold">Playground</h2>
-          <ui.Playground />
+          <h2 className="mb-4 text-lg font-semibold">Examples</h2>
+          <div className="rounded-lg border border-border">
+            <div className="flex min-h-48 items-center justify-center bg-background p-10">
+              <ui.Demo />
+            </div>
+          </div>
         </section>
       ) : null}
 

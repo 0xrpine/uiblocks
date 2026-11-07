@@ -23,7 +23,7 @@ const titles: Record<string, string> = {
   input: "Input",
   progress: "Progress",
   skeleton: "Skeleton",
-  textarea: "Textarea",
+  textarea: "Text area",
 };
 
 test("home lists every block", async ({ page }) => {

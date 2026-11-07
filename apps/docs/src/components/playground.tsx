@@ -2,13 +2,19 @@
 
 import { useState, type ReactNode } from "react";
 
+export type PlaygroundSelectOption = { value: string; label: string };
+
 export type PlaygroundControl =
-  | { type: "select"; key: string; label: string; options: string[]; default: string }
+  | { type: "select"; key: string; label: string; options: PlaygroundSelectOption[]; default: string }
   | { type: "boolean"; key: string; label: string; default: boolean }
-  | { type: "text"; key: string; label: string; default: string }
+  | { type: "text"; key: string; label: string; default: string; maxChars?: number; uppercase?: boolean }
   | { type: "range"; key: string; label: string; min: number; max: number; step?: number; default: number };
 
 export type PlaygroundValues = Record<string, string | number | boolean>;
+
+function optionText(option: PlaygroundSelectOption): string {
+  return typeof option === "string" ? option : (option.label ?? option.value);
+}
 
 function valuesFrom(controls: PlaygroundControl[]): PlaygroundValues {
   return Object.fromEntries(controls.map((c) => [c.key, c.default]));
@@ -44,8 +50,8 @@ export function Playground({
                   className="h-8 rounded-md border border-input bg-background px-2 text-foreground"
                 >
                   {control.options.map((option) => (
-                    <option key={option} value={option}>
-                      {option}
+                    <option key={optionText(option)} value={typeof option === "string" ? option : option.value}>
+                      {optionText(option)}
                     </option>
                   ))}
                 </select>
@@ -65,7 +71,12 @@ export function Playground({
                 <input
                   type="text"
                   value={String(value)}
-                  onChange={(e) => set(control.key, e.target.value)}
+                  maxLength={control.maxChars}
+                  onChange={(e) => {
+                    let next = e.target.value;
+                    if (control.uppercase) next = next.toUpperCase();
+                    set(control.key, next);
+                  }}
                   className="h-8 w-32 rounded-md border border-input bg-background px-2 text-foreground"
                 />
               ) : (

@@ -1,7 +1,7 @@
 {
   "name": "avatar",
   "title": "Avatar",
-  "description": "User image with initials fallback and group stacking. Sizes sm to xl.",
+  "description": "User image with initials fallback and group stacking. Sizes small to extra large.",
   "framework": "react",
   "style": "tailwind",
   "dependencies": ["@radix-ui/react-avatar"],
