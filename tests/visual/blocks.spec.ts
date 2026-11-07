@@ -64,6 +64,29 @@ test("button block: playground interaction and theme toggle", async ({ page }) =
   await page.screenshot({ path: "screenshots/button-block.png", fullPage: true });
 });
 
+test("key blocks have computed styles applied (guards against missing Tailwind classes)", async ({ page }) => {
+  await page.goto("/blocks/badge");
+  const badge = page.locator("span.rounded-full").filter({ hasText: "Solid" }).first();
+  await expect(badge).toHaveCSS("border-radius", /(9999px|\d+(\.\d+)?e\+07px)/);
+
+  await page.goto("/blocks/avatar");
+  const avatarRoot = page.locator(".rounded-full").first();
+  await expect(avatarRoot).toHaveCSS("border-radius", /(9999px|\d+(\.\d+)?e\+07px)/);
+
+  await page.goto("/blocks/skeleton");
+  const skeleton = page.locator(".animate-pulse").first();
+  await expect(skeleton).toHaveCSS("background-color", /^(?!.*rgba\(0, 0, 0, 0\)).*$/);
+
+  await page.goto("/blocks/input");
+  const input = page.locator("input").first();
+  await expect(input).toHaveCSS("border-width", "1px");
+  await expect(input).toHaveCSS("border-radius", /px/);
+
+  await page.goto("/blocks/card");
+  const card = page.locator(".rounded-lg").first();
+  await expect(card).toHaveCSS("border-width", "1px");
+});
+
 test("registry serves every block manifest", async ({ request }) => {
   for (const block of blocks) {
     const res = await request.get(`/r/${block}.json`);
